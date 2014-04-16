@@ -67,6 +67,7 @@ class EClientScriptBoost extends CClientScript
 		'TbBulkActions#',
 		'TbEditableField#',
 		'TbEditable#',
+		'TbGridView#',
 		'TbSelect2#',
 		'Yii2Debug#',
 		'Yii.CHtml.#',
@@ -112,7 +113,7 @@ class EClientScriptBoost extends CClientScript
         $debug = $this->debug === null ? YII_DEBUG : $this->debug;
 		
         // Check if this script is in the exceptions - if so, skip caching.
-		// TODO: do we really need skipList for CSS?
+		// Should be checked for both script and CSS content
 		$skip = false;
         foreach($this->skipList as $s) {
             $skip|=strpos($id, $s) === 0;
@@ -121,7 +122,12 @@ class EClientScriptBoost extends CClientScript
 		
 		// Do not use cache for content with IDs listed in {@link $this->skipList}
 		if ($skip)
-            $compressed = EScriptBoost::minifyJs($content);
+		{
+			if ($type == 'script')
+				$compressed = EScriptBoost::minifyJs($content);
+			else if ($type == 'css')
+				$compressed = EScriptBoost::minifyCss($content);
+		}
 		else
 			$compressed = Yii::app()->cache->get($id);
         
