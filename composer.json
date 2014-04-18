@@ -11,6 +11,13 @@
             "homepage": "http://www.ramirezcobos.com"
         }
     ],
+    "autoload": {
+        "classmap": [
+            "EAssetManagerBoost.php",
+            "EClientScriptBoost.php",
+            "EScriptBoost.php"
+        ]
+    },
     "repositories": [
         {
             "type": "composer",
