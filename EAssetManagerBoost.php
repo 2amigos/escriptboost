@@ -28,6 +28,16 @@
 class EAssetManagerBoost extends CAssetManager {
 
 	/**
+	 * @var array $ignoredPaths specify the path parts that
+	 * the extension will check against in order to not compress/minify the 
+	 * files/directories.
+	 */
+	public $ignoredPaths = array(
+		'bootstrap',
+		'ckeditor',
+		'highcharts',
+	);
+	/**
 	 * @var mixed $minifiedExtensionFlags specify the extension names that
 	 * the extension will check against in order to not compress/minify the 
 	 * files. This flags are ignored if $forceCompress is true
@@ -87,6 +97,9 @@ class EAssetManagerBoost extends CAssetManager {
 			return $this->_published[$path];
 		else if (($src = realpath($path)) !== false)
 		{
+			if ($this->strpos_arr($path, $this->ignoredPaths))
+				return parent::publish($path, $hashByName, $level, $forceCopy);
+			
 			if (is_file($src))
 			{
 				$dir = $this->hash($hashByName ? basename($src) : dirname($src));

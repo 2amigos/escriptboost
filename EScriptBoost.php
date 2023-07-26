@@ -33,7 +33,7 @@ Yii::setPathOfAlias('scriptboosthtml', $assets . DIRECTORY_SEPARATOR . 'html');
 
 Yii::import('scriptboostjs.*');
 Yii::import('scriptboostcss.*');
-Yii::import('scriptboosthtml.HTMLMin');
+Yii::import('scriptboosthtml.*');
 
 class EScriptBoost extends CComponent {
 
@@ -124,12 +124,12 @@ class EScriptBoost extends CComponent {
 	 * 
 	 * @param string $content the content to parse
 	 * @param array $options 
-	 * @see HTMLMin class to check the options
+	 * @see Minify_HTML class to check the options
 	 * @return minified content
 	 */
 	public static function minifyHTML($content, $options = array())
 	{
-		return HTMLMin::minify($content, $options);
+		return Minify_HTML::minify($content, $options);
 	}
 	
 	/**
